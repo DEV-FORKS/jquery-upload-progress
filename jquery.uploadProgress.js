@@ -86,6 +86,7 @@
 jQuery.uploadProgress = function(e, options) {
   jQuery.ajax({
     type: "GET",
+    cache: false,
     url: options.progressUrl + "?X-Progress-ID=" + options.uuid,
     dataType: options.dataType,
     success: function(upload) {
