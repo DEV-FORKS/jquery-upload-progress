@@ -91,13 +91,11 @@ jQuery.uploadProgress = function(e, options) {
     success: function(upload) {
       if (upload.state == 'uploading') {
         upload.percents = Math.floor((upload.received / upload.size)*1000)/10;
-        
-        var bar = $.browser.safari ? $(options.progressBar, parent.document) : $(options.progressBar);
-        bar.css({width: upload.percents+'%'});
         options.uploading(upload);
       }
       
       if (upload.state == 'done' || upload.state == 'error') {
+        upload.percents = 100;
         window.clearTimeout(options.timer);
         options.complete(upload);
       }
@@ -108,6 +106,11 @@ jQuery.uploadProgress = function(e, options) {
       
       if (upload.state == 'error') {
         options.error(upload);
+      }
+      
+      if (upload.percents) {
+        var bar = $.browser.safari ? $(options.progressBar, parent.document) : $(options.progressBar);
+        bar.css({width: upload.percents+'%'});
       }
     }
   });
