@@ -89,28 +89,30 @@ jQuery.uploadProgress = function(e, options) {
     url: options.progressUrl + "?X-Progress-ID=" + options.uuid,
     dataType: options.dataType,
     success: function(upload) {
-      if (upload.state == 'uploading') {
-        upload.percents = Math.floor((upload.received / upload.size)*1000)/10;
-        options.uploading(upload);
-      }
+      if(upload) {
+        if (upload.state == 'uploading') {
+          upload.percents = Math.floor((upload.received / upload.size)*1000)/10;
+          options.uploading(upload);
+        }
       
-      if (upload.state == 'done' || upload.state == 'error') {
-        upload.percents = 100;
-        window.clearTimeout(options.timer);
-        options.complete(upload);
-      }
+        if (upload.state == 'done' || upload.state == 'error') {
+          upload.percents = 100;
+          window.clearTimeout(options.timer);
+          options.complete(upload);
+        }
       
-      if (upload.state == 'done') {
-        options.success(upload);
-      }
+        if (upload.state == 'done') {
+          options.success(upload);
+        }
       
-      if (upload.state == 'error') {
-        options.error(upload);
-      }
+        if (upload.state == 'error') {
+          options.error(upload);
+        }
       
-      if (upload.percents) {
-        var bar = $.browser.safari ? $(options.progressBar, parent.document) : $(options.progressBar);
-        bar.css({width: upload.percents+'%'});
+        if (upload.percents) {
+          var bar = $.browser.safari ? $(options.progressBar, parent.document) : $(options.progressBar);
+          bar.css({width: upload.percents+'%'});
+        }
       }
     }
   });
