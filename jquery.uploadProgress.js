@@ -12,25 +12,18 @@
   options = $.extend({
     dataType: "json",
     interval: 2000,
-    progressBar: "#progressbar",
     progressUrl: "/progress",
     start: function() {},
     uploading: function() {},
     complete: function() {},
     success: function() {},
     error: function() {},
-    preloadImages: [],
     uploadProgressPath: '/javascripts/jquery.uploadProgress.js',
     jqueryPath: '/javascripts/jquery.js',
     timer: ""
   }, options);
   
   $(function() {
-    //preload images
-    for(var i = 0; i<options.preloadImages.length; i++)
-    {
-     options.preloadImages[i] = $("<img>").attr("src", options.preloadImages[i]);
-    }
     /* tried to add iframe after submit (to not always load it) but it won't work.
     safari can't get scripts properly while submitting files */
     if($.browser.safari && top.document == document) {
@@ -89,6 +82,7 @@ jQuery.uploadProgress = function(e, options) {
     cache: false,
     url: options.progressUrl + "?X-Progress-ID=" + options.uuid,
     dataType: options.dataType,
+    cache: false,
     success: function(upload) {
       if(upload) {
         if (upload.state == 'uploading') {
