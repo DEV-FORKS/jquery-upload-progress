@@ -82,7 +82,6 @@ jQuery.uploadProgress = function(e, options) {
     cache: false,
     url: options.progressUrl + "?X-Progress-ID=" + options.uuid,
     dataType: options.dataType,
-    cache: false,
     success: function(upload) {
       if(upload) {
         if (upload.state == 'uploading') {
